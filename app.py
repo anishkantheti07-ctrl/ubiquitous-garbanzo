@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import os
 from datetime import datetime
 from typing import List, Dict
@@ -17,17 +19,21 @@ except ImportError:
 # ============================================================
 # APP CONFIG
 # ============================================================
-
-if pd is None:
-    st.error(
-        "Missing required dependency: pandas. Install it with `pip install pandas`."
-    )
-    st.stop()
-
 # Ensure streamlit is available
 if st is None:
     print("Missing required dependency: streamlit. Install it with `pip install streamlit`.")
     raise SystemExit
+
+# Ensure pandas is available (use Streamlit to show error if possible)
+if pd is None:
+    if st is not None:
+        st.error(
+            "Missing required dependency: pandas. Install it with `pip install pandas`."
+        )
+        st.stop()
+    else:
+        print("Missing required dependency: pandas. Install it with `pip install pandas`.")
+        raise SystemExit
 
 st.set_page_config(
     page_title="News Intelligence Dashboard",
