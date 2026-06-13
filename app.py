@@ -2,11 +2,15 @@ from __future__ import annotations
 
 import os
 from datetime import datetime
-from typing import List, Dict, TYPE_CHECKING
+from typing import List, Dict, TYPE_CHECKING, Any
 from urllib.parse import urlparse
 
 if TYPE_CHECKING:
-    import pandas as pd
+    # Type checkers may try to import pandas; silence errors in editors without pandas
+    try:  # pragma: no cover - editor/type-checker time
+        import pandas as pd  # type: ignore
+    except Exception:  # pragma: no cover
+        pd = None  # type: ignore
 
 try:
     import pandas as pd  # type: ignore
@@ -152,7 +156,7 @@ def fetch_news(api_key: str, params: dict) -> dict:
     return data
 
 
-def articles_to_dataframe(articles: List[Dict]) -> "pd.DataFrame":
+def articles_to_dataframe(articles: List[Dict]) -> Any:
     rows = []
 
     for article in articles:
