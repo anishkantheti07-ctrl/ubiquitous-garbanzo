@@ -134,7 +134,7 @@ def fetch_news(api_key: str, params: dict) -> dict:
     return data
 
 
-def articles_to_dataframe(articles: list[dict]) -> pd.DataFrame:
+def articles_to_dataframe(articles: list[dict]) -> "pd.DataFrame":
     rows = []
 
     for article in articles:
