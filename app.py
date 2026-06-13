@@ -2,8 +2,11 @@ from __future__ import annotations
 
 import os
 from datetime import datetime
-from typing import List, Dict
+from typing import List, Dict, TYPE_CHECKING
 from urllib.parse import urlparse
+
+if TYPE_CHECKING:
+    import pandas as pd
 
 try:
     import pandas as pd  # type: ignore
@@ -11,7 +14,7 @@ except ImportError:
     pd = None
 import requests
 try:
-    import streamlit as st
+    import streamlit as st  # type: ignore
 except ImportError:
     st = None
 
@@ -149,7 +152,7 @@ def fetch_news(api_key: str, params: dict) -> dict:
     return data
 
 
-def articles_to_dataframe(articles: list[dict]) -> "pd.DataFrame":
+def articles_to_dataframe(articles: List[Dict]) -> "pd.DataFrame":
     rows = []
 
     for article in articles:
