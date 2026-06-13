@@ -1,5 +1,6 @@
 import os
 from datetime import datetime
+from typing import List, Dict
 from urllib.parse import urlparse
 
 try:
