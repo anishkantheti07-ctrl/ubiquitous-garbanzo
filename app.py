@@ -4,16 +4,30 @@ from typing import List, Dict
 from urllib.parse import urlparse
 
 try:
-    import pandas as pd
+    import pandas as pd  # type: ignore
 except ImportError:
     pd = None
 import requests
-import streamlit as st
+try:
+    import streamlit as st
+except ImportError:
+    st = None
 
 
 # ============================================================
 # APP CONFIG
 # ============================================================
+
+if pd is None:
+    st.error(
+        "Missing required dependency: pandas. Install it with `pip install pandas`."
+    )
+    st.stop()
+
+# Ensure streamlit is available
+if st is None:
+    print("Missing required dependency: streamlit. Install it with `pip install streamlit`.")
+    raise SystemExit
 
 st.set_page_config(
     page_title="News Intelligence Dashboard",
@@ -21,12 +35,6 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
-
-if pd is None:
-    st.error(
-        "Missing required dependency: pandas. Install it with `pip install pandas`."
-    )
-    st.stop()
 
 NEWS_ENDPOINT = "https://newsapi.org/v2/top-headlines"
 
